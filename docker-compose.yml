@@ -1,0 +1,27 @@
+version: "0.1"
+
+services:
+
+  bookstore:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: bookstore-api
+    command: uvicorn bookstore.main:app --host 0.0.0.0 --port 8000
+    ports: 
+      - 8000:8000
+    volumes:
+      - ./app:/app/
+    env_file:
+      - ./env/local.env
+
+  postgres:
+    build: postgres:16-alpine
+    container_name: postgres
+    ports: 
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./initdb/initdb.sql:/docker-entrypoint-initdb.d/init.sql

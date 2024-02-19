@@ -1,8 +1,19 @@
-# Folders
-**/__pycache__/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
 # Apple
-**/.DS_Store
+.DS_Store
 
 # Python versions
 .python-version
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+# VS Code
+.vscode/

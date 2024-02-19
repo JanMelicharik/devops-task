@@ -17,3 +17,6 @@ venv/
 
 # VS Code
 .vscode/
+
+# Scratch files
+.scratch/

@@ -1,10 +1,20 @@
-from fastapi import FastAPI
-from fastapi.responses import Response
+from fastapi import FastAPI, Depends
 
-from bookstore.config import settings
-from bookstore.db import connect, query_db
+from sqlalchemy.orm import Session
+
+from bookstore.crud import get_book, get_books_filtered, test_db_connection
+from bookstore.db import SessionLocal
 
 app = FastAPI()
+
+
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 @app.get("/")
@@ -12,50 +22,17 @@ async def root():
     return {"message": "Welcome to the bookstore!"}
 
 
+@app.get("/book/{book_id}")
+def get_book_by_id(book_id: int, db: Session = Depends(get_db)):
+    return get_book(db, book_id=book_id)
+
+
 @app.get("/book/")
-async def book(
-    name: str = None, year: int = None, author: str = None, limit: int = 100
-):
-    try:
-        conn = connect(
-            database=settings.database,
-            host=settings.host,
-            port=settings.port,
-            user=settings.user,
-            password=settings.password,
-        )
-        result = query_db(
-            conn,
-            settings.db_schema,
-            "book",
-            ("name", "author", "year"),
-            name=name,
-            year=year,
-            author=author,
-            limit=limit,
-        )
-        return Response(result)
-    except Exception as e:
-        return Response({"message": str(e)}, status_code=500)
+def get_book_by_attributes(name: str = None, year: int = None, author: str = None, limit: int = None, db: Session = Depends(get_db)):
+    result = get_books_filtered(db, book_name=name, author=author, year=year, limit=limit)
+    return result
 
 
-@app.get("/db_info/")
-def db_info():
-    try:
-        connect(
-            database=settings.database,
-            host=settings.host,
-            port=settings.port,
-            user=settings.user,
-            password=settings.password,
-        )
-        return {
-            "message": f"Connected to {settings.host}:{settings.port}/{settings.database}. User: {settings.user}."
-        }
-    except Exception as e:
-        return Response(
-            {
-                "message": f"{str(e)} {settings.host}:{settings.port}/{settings.database}. User: {settings.user}."
-            },
-            status_code=500,
-        )
+@app.get("/db-connection")
+def db_connection():
+    return test_db_connection()

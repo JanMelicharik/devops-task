@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+from fastapi.responses import Response
 
-from .config import settings
-from .db import connect, query_db
+from bookstore.config import settings
+from bookstore.db import connect, query_db
 
 app = FastAPI()
 
@@ -34,9 +34,9 @@ async def book(
             author=author,
             limit=limit,
         )
-        return JSONResponse(result)
+        return Response(result)
     except Exception as e:
-        return JSONResponse({"message": str(e)}, status_code=500)
+        return Response({"message": str(e)}, status_code=500)
 
 
 @app.get("/db_info/")
@@ -53,7 +53,7 @@ def db_info():
             "message": f"Connected to {settings.host}:{settings.port}/{settings.database}. User: {settings.user}."
         }
     except Exception as e:
-        return JSONResponse(
+        return Response(
             {
                 "message": f"{str(e)} {settings.host}:{settings.port}/{settings.database}. User: {settings.user}."
             },

@@ -51,5 +51,6 @@ def query_db(
         )
         cur.execute(query, (name, year, author))
         result = cur.fetchall()
+        print(result)
 
     return JSONResponse(result)

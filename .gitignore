@@ -1,0 +1,8 @@
+# Folders
+**/__pycache__/
+
+# Apple
+**/.DS_Store
+
+# Python versions
+.python-version

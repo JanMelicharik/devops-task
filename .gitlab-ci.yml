@@ -1,0 +1,20 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - echo "Building image, tagging with $CI_COMMIT_ID, pushing to registry"
+
+test:
+  stage: test
+  script:
+    - echo "Testing"
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying"
+  when: manual

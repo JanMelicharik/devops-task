@@ -1,14 +1,14 @@
 import pytest
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.engine import create_engine
-
-from bookstore.db import SQLALCHEMY_DATABASE_URL
+from bookstore.config import settings
+from bookstore.db import get_database_url
 
 
 @pytest.fixture(scope='session')
 def db_engine(request):
     """yields a SQLAlchemy engine which is suppressed after the test session"""
-    engine_ = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"options": "-csearch-path=bookstore"})
+    engine_ = create_engine(get_database_url(), connect_args={"options": f"-csearch-path={settings.db_settings.schema}"})
 
     yield engine_
 

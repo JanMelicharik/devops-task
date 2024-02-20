@@ -13,15 +13,14 @@ services:
     volumes:
       - ./app:/app/
     env_file:
-      - ./env/local.env
+      - ./env/local/bookstore.env
 
   postgres:
     build: postgres:16-alpine
     container_name: postgres
     ports: 
       - 5432:5432
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+    env_file:
+      - ./env/local/postgres.env
     volumes:
       - ./initdb/initdb.sql:/docker-entrypoint-initdb.d/init.sql

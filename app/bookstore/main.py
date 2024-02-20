@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends
 
 from sqlalchemy.orm import Session
+from bookstore.config import settings
 
 from bookstore.crud import get_book, get_books_filtered, test_db_connection
 from bookstore.db import SessionLocal

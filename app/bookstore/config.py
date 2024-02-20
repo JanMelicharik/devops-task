@@ -1,15 +1,25 @@
-import os
-
 from pydantic_settings import BaseSettings
+from pydantic import BaseModel
+
+
+class DbUserSettings(BaseModel):
+    username: str
+    password: str
+
+
+class DbSettings(BaseModel):
+    database: str
+    host: str
+    port: str
+    schema: str
+    db_user: DbUserSettings
 
 
 class Settings(BaseSettings):
-    database: str = os.getenv("POSTGRES_DB", "book")
-    host: str = os.getenv("POSTGRES_HOST", "localhost")
-    port: int = os.getenv("POSTGRES_PORT", 5432)
-    user: str = os.getenv("POSTGRES_USER", "postgres")
-    password: str = os.getenv("POSTGRES_PASSWORD", "password")
-    db_schema: str = os.getenv("POSTGRES_SCHEMA", "bookstore")
+    db_settings: DbSettings
+
+    class Config:
+        env_nested_delimiter = "__"
 
 
 settings = Settings()

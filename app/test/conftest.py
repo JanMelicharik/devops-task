@@ -8,7 +8,7 @@ from bookstore.db import get_database_url
 @pytest.fixture(scope='session')
 def db_engine(request):
     """yields a SQLAlchemy engine which is suppressed after the test session"""
-    engine_ = create_engine(get_database_url(), connect_args={"options": f"-csearch-path={settings.db_settings.schema}"})
+    engine_ = create_engine(get_database_url(), connect_args={"options": f"-csearch-path={settings.db_settings.db_schema}"})
 
     yield engine_
 

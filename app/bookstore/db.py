@@ -11,7 +11,7 @@ def get_database_url() -> str:
     )
 
 
-engine = create_engine(get_database_url(), connect_args={"options": f"-csearch-path={settings.db_settings.schema}"})
+engine = create_engine(get_database_url(), connect_args={"options": f"-csearch-path={settings.db_settings.db_schema}"})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

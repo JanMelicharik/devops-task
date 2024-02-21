@@ -28,7 +28,7 @@ spec:
           value: "postgres"
         - name: DB_SETTINGS__PORT
           value: "5432"
-        - name: DB_SETTINGS__SCHEMA
+        - name: DB_SETTINGS__DB_SCHEMA
           value: "bookstore"
         - name: DB_SETTINGS__DATABASE
           valueFrom:

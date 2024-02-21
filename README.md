@@ -6,10 +6,10 @@ Sample description
 
 > *Make sure you have `pyenv` and `docker` installed*
 
-Install python version as specified in `pyproject.toml` (3.11.1) and set as local:
+Install python version as specified in `pyproject.toml` (3.11.8) and set as local:
 
 ```
-pyenv virtualenv 3.11.1 bookstore_api && pyenv local bookstore_api
+pyenv virtualenv 3.11.8 bookstore_api && pyenv local bookstore_api
 ```
 
 > *Optional: update pip with `python3.11 -m pip install --upgrade pip`*
@@ -71,6 +71,7 @@ And from inside the container
 5) Implement additional logging and tracking of request lifetime
 6) Implement suite of tests using pytest
 7) Better object management with pydantic models
+8) Vault for K8s secrets
 
 ---
 

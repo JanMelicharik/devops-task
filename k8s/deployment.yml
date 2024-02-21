@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-api
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bookstore-api
+  template:
+    metadata:
+      labels:
+        app: bookstore-api
+    spec:
+      containers:
+      - name: bookstore-api
+        image: jmelicharik/devop-task-bookstore  
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_SETTINGS__HOST
+          value: "postgres"
+        - name: DB_SETTINGS__PORT
+          value: "5432"
+        - name: DB_SETTINGS__SCHEMA
+          value: "bookstore"
+        - name: DB_SETTINGS__DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: bookstore-secret
+              key: DB_NAME
+        - name: DB_SETTINGS__DB_USER__USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: bookstore-secret
+              key: DB_USERNAME
+        - name: DB_SETTINGS__DB_USER__PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: bookstore-secret
+              key: DB_PASSWORD

@@ -14,8 +14,7 @@ pyenv virtualenv 3.11.1 bookstore_api && pyenv local bookstore_api
 
 > *Optional: update pip with `python3.11 -m pip install --upgrade pip`*
 
-Set your IDE to use this virtual environment.
-Install requirements:
+Set your IDE to use this virtual environment and install requirements:
 
 ```
 pip install --upgrade -r requirements.txt
@@ -97,11 +96,11 @@ Get URL to connect to the service with
 minikube service bookstore-api --url
 ```
 
-> *This might throw an error as the service might not be running. That could be cause by LoadBalancer - it's provided by cloud providers and `minikube` doesn't support it.
+> *This might throw an error as the service might not be running. That could be caused by LoadBalancer - it's provided by cloud providers and `minikube` doesn't support it.*
 > 
-> The pod for the service might still be in `Pending` state. You can check that with `kubectl get pods`
+> *The pod for the service might still be in `Pending` state. You can check that with `kubectl get pods`*
 > 
-> It is possible to bypass this issue with `minikube tunnel` command in separate terminal window.*
+> *It is possible to bypass this issue with `minikube tunnel` command in separate terminal window.*
 
 When you visit the URL provided by `minikube`, you'll see the welcome message for Bookstore API.
 
